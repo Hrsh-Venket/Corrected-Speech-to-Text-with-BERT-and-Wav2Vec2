@@ -1,3 +1,6 @@
+# https://huggingface.co/jonatasgrosman/wav2vec2-large-xlsr-53-english
+# https://huggingface.co/bert-base-uncased
+
 from huggingsound import SpeechRecognitionModel
 from transformers import pipeline
 from transformers import logging
@@ -55,15 +58,16 @@ def collate(input):
             output += str
     return output
 
-audio_paths = ["karanrecording.mp3"]
+audio_paths = ["shaunakrecording.mp3"]
 
 transcriptions = w2vmodel.transcribe(audio_paths)
-
 input = transcriptions[0]["transcription"]
 input = input.split()
 
-
+#(1) is a strategy where tokens are used to determine lexicographic distance
+#(2) is a strategy where replaced words 
 for t in range(1):
+    # output = [] #(2)
     for i in range(len(input)):
         temp = input[i]
         token = tokenizer(temp)['input_ids'][1]
@@ -71,9 +75,8 @@ for t in range(1):
         apiint = unmasker(' '.join(input))
         dist = []
         for r in range(5):
-            # if (np.abs((apiint[r]['token'] - token)) < 2):
+            # if (np.abs((apiint[r]['token'] - token)) < 2): #(1)
             dist.append(levenshtein_distance(temp, apiint[r]['token_str']))
-            # print(dist)
         lindex = 0
         l = dist[0]
         for r in range(5):
@@ -82,14 +85,11 @@ for t in range(1):
                 l = dist[r]
         if l <= 2:
             input[i] = apiint[lindex]['token_str']
+            # output.append(apiint[lindex]['token_str']) #(2)
         else:
             input[i] = temp
-            # if (levenshtein_distance(temp, apiint[r]['token_str']) <=2):
-            #     input[i] = apiint[r]['token_str']
-            #     break
-            #     # print(apiint[r]['token_str'])
-            # else:
-            #     input[i] = temp
+            # output.append(temp) #(2)
+        # input[i] = temp #(2)
 
 for t in range(1):
     inndex = 1
@@ -105,4 +105,16 @@ for t in range(1):
             inndex += 1
 
 print(collate(input))
-# input.split()
+
+# In comparison, a plain autocorrect gives this output:
+
+# "The b-movie by Jerry Sinclair, the sound of buzzing 
+# bees, can be heard according to all known laws of 
+# aviation that is no way for b to be able to fly its 
+# wings are too small to get its start little body off 
+# the ground, the be, of course, flies anyway because 
+# bees don't care what humans think is possible. 
+# Barbuda is guaranteed one member of the House of 
+# Representatives and two members of the Senate."
+
+# - https://huggingface.co/oliverguhr/spelling-correction-english-base?text=lets+do+a+comparsion
