@@ -37,7 +37,7 @@
 # fsspec==2023.4.0
 # gitdb==4.0.10
 # GitPython==3.1.31
-huggingface-hub==0.13.4
+# huggingface-hub==0.13.4
 huggingsound==0.1.6
 # idna @ file:///home/linux1/recipes/ci/idna_1610986105248/work
 # imageio==2.27.0
@@ -72,7 +72,7 @@ huggingsound==0.1.6
 # nest-asyncio @ file:///home/conda/feedstock_root/build_artifacts/nest-asyncio_1664684991461/work
 # networkx==3.1
 # numba==0.56.4
-numpy==1.23.5
+# numpy==1.23.5
 # oauthlib==3.2.2
 # # opencv-python==4.7.0.72
 # openpyxl==3.1.2
