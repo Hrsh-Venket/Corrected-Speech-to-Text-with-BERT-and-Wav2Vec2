@@ -1,16 +1,6 @@
 import streamlit as st
-
-from transformers import pipeline
 from huggingsound import SpeechRecognitionModel
 from transformers import logging
-import numpy as np
-from transformers import BertTokenizer, BertModel
-
-w2vmodel = SpeechRecognitionModel("jonatasgrosman/wav2vec2-large-xlsr-53-english")
-logging.set_verbosity_error() #change'error' to 'warning' or remove this if you want to see the warning
-unmasker = pipeline('fill-mask', model='bert-base-uncased')
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-model = BertModel.from_pretrained("bert-base-uncased")
 
 def levenshtein_distance(s, t):
     m, n = len(s), len(t)
@@ -57,6 +47,10 @@ def collate(input):
             output += str
     return output
 
+
+w2vmodel = SpeechRecognitionModel("jonatasgrosman/wav2vec2-large-xlsr-53-english")
+logging.set_verbosity_error() #change'error' to 'warning' or remove this if you want to see the warning
+
 uploaded_file = st.file_uploader("Choose an .mp3 or .wav file")
 
 if uploaded_file is not None:
@@ -71,6 +65,14 @@ if uploaded_file is not None:
     transcriptions = w2vmodel.transcribe(audio_paths)
     input = transcriptions[0]["transcription"]
     input = input.split()
+
+    # from huggingsound del SpeechRecognitionModel
+    del huggingsound
+    from transformers import pipeline
+    from transformers import BertTokenizer, BertModel
+    unmasker = pipeline('fill-mask', model='bert-base-uncased')
+    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    model = BertModel.from_pretrained("bert-base-uncased")
 
     #(1) is a strategy where tokens are used to determine lexicographic distance
     #(2) is a strategy where replaced words 
