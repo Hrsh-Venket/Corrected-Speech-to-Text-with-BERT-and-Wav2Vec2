@@ -57,7 +57,6 @@ def collate(input):
             output += str
     return output
 
-
 uploaded_file = st.file_uploader("Choose an .mp3 or .wav file")
 
 if uploaded_file is not None:
