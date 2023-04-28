@@ -67,52 +67,52 @@ if uploaded_file is not None:
     input = input.split()
 
     # from huggingsound del SpeechRecognitionModel
-    del huggingsound
-    from transformers import pipeline
-    from transformers import BertTokenizer, BertModel
-    unmasker = pipeline('fill-mask', model='bert-base-uncased')
-    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-    model = BertModel.from_pretrained("bert-base-uncased")
+    # del huggingsound
+    # from transformers import pipeline
+    # from transformers import BertTokenizer, BertModel
+    # unmasker = pipeline('fill-mask', model='bert-base-uncased')
+    # tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    # model = BertModel.from_pretrained("bert-base-uncased")
 
-    #(1) is a strategy where tokens are used to determine lexicographic distance
-    #(2) is a strategy where replaced words 
-    for t in range(1):
-        # output = [] #(2)
-        for i in range(len(input)):
-            temp = input[i]
-            token = tokenizer(temp)['input_ids'][1]
-            input[i] = "[MASK]"
-            apiint = unmasker(' '.join(input))
-            dist = []
-            for r in range(5):
-                # if (np.abs((apiint[r]['token'] - token)) < 2): #(1)
-                dist.append(levenshtein_distance(temp, apiint[r]['token_str']))
-            lindex = 0
-            l = dist[0]
-            for r in range(5):
-                if dist[r] < l:
-                    lindex = r
-                    l = dist[r]
-            if l <= 2:
-                input[i] = apiint[lindex]['token_str']
-                # output.append(apiint[lindex]['token_str']) #(2)
-            else:
-                input[i] = temp
-                # output.append(temp) #(2)
-            # input[i] = temp #(2)
+    # #(1) is a strategy where tokens are used to determine lexicographic distance
+    # #(2) is a strategy where replaced words 
+    # for t in range(1):
+    #     # output = [] #(2)
+    #     for i in range(len(input)):
+    #         temp = input[i]
+    #         token = tokenizer(temp)['input_ids'][1]
+    #         input[i] = "[MASK]"
+    #         apiint = unmasker(' '.join(input))
+    #         dist = []
+    #         for r in range(5):
+    #             # if (np.abs((apiint[r]['token'] - token)) < 2): #(1)
+    #             dist.append(levenshtein_distance(temp, apiint[r]['token_str']))
+    #         lindex = 0
+    #         l = dist[0]
+    #         for r in range(5):
+    #             if dist[r] < l:
+    #                 lindex = r
+    #                 l = dist[r]
+    #         if l <= 2:
+    #             input[i] = apiint[lindex]['token_str']
+    #             # output.append(apiint[lindex]['token_str']) #(2)
+    #         else:
+    #             input[i] = temp
+    #             # output.append(temp) #(2)
+    #         # input[i] = temp #(2)
 
-    for t in range(1):
-        inndex = 1
-        for i in range(len(input)):
-            input.insert(inndex, "[MASK]")
-            # print(' '.join(input))
-            apiint = unmasker(' '.join(input))
-            if (apiint[0]['token'] < 1500):
-                input[inndex] = apiint[0]["token_str"]
-                inndex += 2
-            else:
-                del input[inndex]
-                inndex += 1
+    # for t in range(1):
+    #     inndex = 1
+    #     for i in range(len(input)):
+    #         input.insert(inndex, "[MASK]")
+    #         # print(' '.join(input))
+    #         apiint = unmasker(' '.join(input))
+    #         if (apiint[0]['token'] < 1500):
+    #             input[inndex] = apiint[0]["token_str"]
+    #             inndex += 2
+    #         else:
+    #             del input[inndex]
+    #             inndex += 1
 
     st.write(collate(input))
 
