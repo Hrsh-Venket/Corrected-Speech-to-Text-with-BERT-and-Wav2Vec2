@@ -1,7 +1,7 @@
 import streamlit as st
 
-from huggingsound import SpeechRecognitionModel
 from transformers import pipeline
+from huggingsound import SpeechRecognitionModel
 from transformers import logging
 import numpy as np
 from transformers import BertTokenizer, BertModel
