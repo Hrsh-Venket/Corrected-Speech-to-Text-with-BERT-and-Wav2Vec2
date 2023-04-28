@@ -9,7 +9,7 @@ audioread==3.0.0
 backcall @ file:///home/conda/feedstock_root/build_artifacts/backcall_1592338393461/work
 backports.functools-lru-cache @ file:///home/conda/feedstock_root/build_artifacts/backports.functools_lru_cache_1618230623929/work
 blinker==1.6.2
-blur-detector==0.0.6
+# blur-detector==0.0.6
 brotlipy==0.7.0
 cachetools==5.3.0
 certifi==2022.12.7
@@ -74,7 +74,7 @@ networkx==3.1
 numba==0.56.4
 numpy==1.23.5
 oauthlib==3.2.2
-opencv-python==4.7.0.72
+# opencv-python==4.7.0.72
 openpyxl==3.1.2
 packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1673482170163/work
 pandas==2.0.0
@@ -120,9 +120,9 @@ ruamel-yaml-conda @ file:///C:/ci/ruamel_yaml_1616016898638/work
 scikit-image==0.20.0
 scikit-learn==1.2.2
 scipy==1.9.1
-seaborn==0.12.2
+# seaborn==0.12.2
 six @ file:///tmp/build/80754af9/six_1623709665295/work
-sklearn==0.0
+# sklearn==0.0
 smmap==5.0.0
 soundfile==0.12.1
 soxr==0.3.5
@@ -135,9 +135,9 @@ tifffile==2023.3.21
 tokenizers==0.13.3
 toml==0.10.2
 toolz @ file:///home/conda/feedstock_root/build_artifacts/toolz_1657485559105/work
-torch==1.12.1
-torchaudio==2.0.1+cu118
-torchvision==0.15.1+cu118
+# torch==1.12.1
+# torchaudio==2.0.1+cu118
+# torchvision==0.15.1+cu118
 tornado @ file:///D:/bld/tornado_1656937934674/work
 tqdm==4.65.0
 traitlets @ file:///home/conda/feedstock_root/build_artifacts/traitlets_1675110562325/work
