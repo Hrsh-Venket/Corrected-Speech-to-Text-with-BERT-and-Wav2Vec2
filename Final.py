@@ -1,12 +1,6 @@
 # https://huggingface.co/jonatasgrosman/wav2vec2-large-xlsr-53-english
 # https://huggingface.co/bert-base-uncased
 
-import streamlit as st
-
-# streamlit run Final.py
-st.write("Welcome :) How are you doing today?")
-
-
 from huggingsound import SpeechRecognitionModel
 from transformers import pipeline
 from transformers import logging
