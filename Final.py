@@ -1,6 +1,20 @@
 # https://huggingface.co/jonatasgrosman/wav2vec2-large-xlsr-53-english
 # https://huggingface.co/bert-base-uncased
 
+import sounddevice as sd
+from scipy.io.wavfile import write
+import os
+ 
+fs = 44100  # this is the frequency sampling; also: 4999, 64000
+seconds = 10  # Duration of recording
+ 
+myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=2)
+print("Starting: Speak now!")
+sd.wait()  # Wait until recording is finished
+print("finished")
+write('output.wav', fs, myrecording)  # Save as WAV file
+os.startfile("output.wav")
+
 from huggingsound import SpeechRecognitionModel
 from transformers import pipeline
 from transformers import logging
@@ -44,12 +58,12 @@ def collate(input):
                 Capital = True
             if input[i] in ["-", "'"]:
                 Dash = True
-            else:
-                Dash = False
         else:
             str = ""
             if (Dash == False):
                 str += " "
+            if (Dash == True):
+                Dash = False
             if Capital:
                 str += input[i].capitalize()
                 Capital = False
@@ -58,7 +72,7 @@ def collate(input):
             output += str
     return output
 
-audio_paths = ["shaunakrecording.mp3"]
+audio_paths = ["output.wav"]
 
 transcriptions = w2vmodel.transcribe(audio_paths)
 input = transcriptions[0]["transcription"]
